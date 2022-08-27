@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(left == null) return;
+
         Vector2 verticalScroll = new Vector2(0, moveSpeed.y * Time.deltaTime);
         transform.Translate(verticalScroll);
 
@@ -31,8 +33,10 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void Move()
+    public void OnDeath()
     {
-
+        Destroy(left.gameObject);
+        Destroy(right.gameObject);
+        moveSpeed = Vector2.zero;
     }
 }
