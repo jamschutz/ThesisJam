@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
+    public Transform[] spawnLocations;
     public Vector2 tearConstraints;
     public float tearSpeed;
     public float spawnRate;
     public bool symmetricalSpawn;
+    public Vector2 tearDirectionConstraints;
 
 
     float timer;
@@ -33,13 +35,16 @@ public class EnemySpawner : MonoBehaviour
                 rightTear.GetComponent<TearController>().moveSpeed = tearSpeed;
             }
             else {
-                Vector3 spawnPosition = new Vector3(
-                    Random.Range(tearConstraints.x, tearConstraints.y),
-                    transform.position.y,
-                    0
-                );
+                int spawnLocationIndex = Random.Range(0, spawnLocations.Length);
+                // Vector3 spawnPosition = new Vector3(
+                //     Random.Range(tearConstraints.x, tearConstraints.y),
+                //     transform.position.y,
+                //     0
+                // );
+                Vector3 spawnPosition = spawnLocations[spawnLocationIndex].position;
                 var tear = GameObject.Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
                 tear.GetComponent<TearController>().moveSpeed = tearSpeed;
+                tear.transform.rotation = Quaternion.Euler(0, 45, 0);
             }
             
             timer = 0;
