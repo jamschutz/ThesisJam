@@ -28,12 +28,24 @@ public class EnemySpawner : MonoBehaviour
             // spawn tear
             if(symmetricalSpawn) {
                 float xPos = Random.Range(0, tearConstraints.y);
-                Vector3 rightPos = new Vector3(xPos, transform.position.y, 0);
-                Vector3 leftPos = new Vector3(-xPos, transform.position.y, 0);
+                // Vector3 rightPos = new Vector3(xPos, transform.position.y, 0);
+                // Vector3 leftPos = new Vector3(-xPos, transform.position.y, 0);
+
+                Vector3 rightPos = spawnLocations[1].position;
+                Vector3 leftPos = spawnLocations[0].position;
+
                 var leftTear = GameObject.Instantiate(enemyPrefab, leftPos, Quaternion.identity);
                 var rightTear = GameObject.Instantiate(enemyPrefab, rightPos, Quaternion.identity);
-                // leftTear.GetComponent<TearController>().moveSpeed = tearSpeed;
-                // rightTear.GetComponent<TearController>().moveSpeed = tearSpeed;
+
+
+                float moveSpeed = Random.Range(tearSpeed.x, tearSpeed.y);
+                float horizontalMove = Random.Range(tearSpeedHorizontal.x, tearSpeedHorizontal.y);
+                horizontalMove = (Random.Range(0, 10) <= 5)? horizontalMove : -horizontalMove;
+
+                leftTear.GetComponent<TearController>().moveSpeed = moveSpeed;
+                rightTear.GetComponent<TearController>().moveSpeed = moveSpeed;
+                leftTear.GetComponent<TearController>().horizontalMoveSpeed = horizontalMove;
+                rightTear.GetComponent<TearController>().horizontalMoveSpeed = -horizontalMove;
             }
             else {
                 int spawnLocationIndex = Random.Range(0, spawnLocations.Length);

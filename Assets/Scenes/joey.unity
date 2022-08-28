@@ -2631,10 +2631,10 @@ MonoBehaviour:
   - {fileID: 1821754976}
   - {fileID: 315336971}
   tearConstraints: {x: -22, y: 22}
-  tearSpeed: {x: 4, y: 7}
-  tearSpeedHorizontal: {x: 2, y: 10}
+  tearSpeed: {x: 3, y: 6}
+  tearSpeedHorizontal: {x: 0, y: 4}
   spawnRate: 0.2
-  symmetricalSpawn: 0
+  symmetricalSpawn: 1
   tearDirectionConstraints: {x: 2, y: 8}
 --- !u!1 &1804568035
 GameObject:
@@ -3433,7 +3433,7 @@ MonoBehaviour:
   moveSpeed: {x: 50, y: 0.5}
   left: {fileID: 2000466121}
   right: {fileID: 534390790}
-  xConstraints: {x: 1, y: 22}
+  xConstraints: {x: 1, y: 13}
 --- !u!4 &2138450539
 Transform:
   m_ObjectHideFlags: 0
