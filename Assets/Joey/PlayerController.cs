@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void OnDeath()
+    public void OnDeath(bool won = false)
     {
         Debug.Log("EXPLOSION");
         GameObject.Instantiate(explosion, left.transform.position, Quaternion.identity);
@@ -53,6 +53,10 @@ public class PlayerController : MonoBehaviour
         Destroy(right.gameObject);
         moveSpeed = Vector2.zero;
 
+        if(!won) {
+            GetComponent<AudioSource>().Play();
+        }
+
     }
 
 
@@ -61,5 +65,7 @@ public class PlayerController : MonoBehaviour
         Destroy(sadFace);
         happyFace.SetActive(true);
         OnDeath();
+
+
     }
 }
