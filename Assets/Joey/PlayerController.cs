@@ -8,6 +8,16 @@ public class PlayerController : MonoBehaviour
     public Transform left;
     public Transform right;
     public Vector2 xConstraints;
+    public GameObject sadFace;
+    public GameObject happyFace;
+    public GameObject explosion;
+
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 
 
     void Update()
@@ -35,8 +45,21 @@ public class PlayerController : MonoBehaviour
 
     public void OnDeath()
     {
+        Debug.Log("EXPLOSION");
+        GameObject.Instantiate(explosion, left.transform.position, Quaternion.identity);
+        GameObject.Instantiate(explosion, right.transform.position, Quaternion.identity);
+
         Destroy(left.gameObject);
         Destroy(right.gameObject);
         moveSpeed = Vector2.zero;
+
+    }
+
+
+    public void OnWin()
+    {
+        Destroy(sadFace);
+        happyFace.SetActive(true);
+        OnDeath();
     }
 }

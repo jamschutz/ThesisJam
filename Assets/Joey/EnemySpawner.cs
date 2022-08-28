@@ -12,13 +12,20 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRate;
     public bool symmetricalSpawn;
     public Vector2 tearDirectionConstraints;
+    public Transform player;
 
+    public float maxInwardDirection = -6;
+    public float maxPlayerPosForDirectionChange;
 
     float timer;
+    float startingPlayerPos;
+    float startingHorizontal;
 
     void Start()
     {
         timer = 0;
+        startingPlayerPos = player.position.y;
+        startingHorizontal = tearSpeedHorizontal.x;
     }
 
 
@@ -49,6 +56,7 @@ public class EnemySpawner : MonoBehaviour
             }
             else {
                 int spawnLocationIndex = Random.Range(0, spawnLocations.Length);
+                bool isLeft = spawnLocationIndex == 0;
                 Vector3 spawnPosition = spawnLocations[spawnLocationIndex].position;
                 float tearMoveWidth = Random.Range(tearDirectionConstraints.x, tearDirectionConstraints.y);
                 Vector2 tearMoveConstraints = new Vector2(spawnPosition.x - tearMoveWidth, spawnPosition.y + tearMoveWidth);
@@ -57,7 +65,7 @@ public class EnemySpawner : MonoBehaviour
 
                 tear.GetComponent<TearController>().moveSpeed = Random.Range(tearSpeed.x, tearSpeed.y);
                 float horizontalMove = Random.Range(tearSpeedHorizontal.x, tearSpeedHorizontal.y);
-                tear.GetComponent<TearController>().horizontalMoveSpeed = (Random.Range(0, 10) <= 5)? horizontalMove : -horizontalMove;
+                tear.GetComponent<TearController>().horizontalMoveSpeed = (isLeft)? -horizontalMove : horizontalMove;
                 tear.GetComponent<TearController>().moveConstraints = tearMoveConstraints;
             }
             
@@ -65,5 +73,8 @@ public class EnemySpawner : MonoBehaviour
         }
 
         timer += Time.deltaTime;
+        float playerPos = Mathf.Lerp(startingPlayerPos, maxPlayerPosForDirectionChange, player.position.y);
+        float playerPosPercent = (player.position.y - startingPlayerPos) / (maxPlayerPosForDirectionChange - startingPlayerPos);
+        tearSpeedHorizontal.x = Mathf.Lerp(startingHorizontal, maxInwardDirection, playerPosPercent);
     }
 }
